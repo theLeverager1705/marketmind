@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 export const config = {
-  port: Number(process.env.API_PORT || 5000),
+  port: Number(process.env.API_PORT || process.env.PORT || 5000),
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
   jwtSecret: process.env.JWT_SECRET || 'dev-only-secret-change-me',
   jwtExpiresHours: Number(process.env.JWT_EXPIRES_HOURS || 24),

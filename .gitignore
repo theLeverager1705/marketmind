@@ -7,3 +7,4 @@ dist/
 *.db-shm
 backend/data/
 .DS_Store
+~$*

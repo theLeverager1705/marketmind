@@ -83,6 +83,19 @@ npm start
 
 The API then also serves the built frontend on http://localhost:5000.
 
+### Deploy to Render
+
+The repo includes a [`render.yaml`](render.yaml) Blueprint. On Render choose **New > Blueprint**, pick this
+repository and click **Apply**. It creates one web service that builds the frontend and serves it from the API,
+generates a random `JWT_SECRET`, and asks for an optional `ANTHROPIC_API_KEY` (leave it empty for demo mode).
+
+Manual setup works too: **New > Web Service**, build command `npm run install:all && npm run build`,
+start command `npm start`, and environment variable `NODE_VERSION=22.13.0`.
+
+> **Note:** on Render's free plan the file system is temporary, so the SQLite database (accounts, sessions,
+> reports) is reset on every redeploy or restart. To keep data, use a paid plan with a Persistent Disk mounted
+> at e.g. `/data` and set `DB_PATH=/data/marketmind.db`.
+
 ## Database and authentication
 
 The schema lives in [`database/schema.sql`](database/schema.sql) and is applied automatically on startup.
