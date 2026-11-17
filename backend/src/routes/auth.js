@@ -14,7 +14,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const q = {
   userByEmail: db.prepare('SELECT * FROM users WHERE email = ?'),
-  insertUser: db.prepare('INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)'),
+  insertUser: db.prepare('INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)'),
+  hasAdmin: db.prepare("SELECT 1 FROM users WHERE role = 'admin'"),
   touchLogin: db.prepare("UPDATE users SET last_login_at = datetime('now') WHERE id = ?"),
   insertSession: db.prepare(
     'INSERT INTO sessions (id, user_id, expires_at, ip_address, user_agent) VALUES (?, ?, ?, ?, ?)'
@@ -55,8 +56,10 @@ router.post('/register', authLimiter, (req, res) => {
   if (q.userByEmail.get(email)) return res.status(409).json({ error: 'An account with this email already exists' });
 
   const hash = bcrypt.hashSync(password, 10);
-  const { lastInsertRowid } = q.insertUser.run(name, email, hash);
-  const user = { id: Number(lastInsertRowid), name, email, role: 'analyst' };
+  // The first account (or ADMIN_EMAIL) becomes admin and can open the Database page.
+  const role = !q.hasAdmin.get() || email === config.adminEmail ? 'admin' : 'analyst';
+  const { lastInsertRowid } = q.insertUser.run(name, email, hash, role);
+  const user = { id: Number(lastInsertRowid), name, email, role };
   q.touchLogin.run(user.id);
   q.logAttempt.run(user.id, email, 1, req.ip, String(req.headers['user-agent'] || '').slice(0, 255));
   res.status(201).json(issueSession(user, req));

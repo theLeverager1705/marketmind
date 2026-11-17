@@ -14,6 +14,7 @@ export default function Navbar() {
         {user ? (
           <>
             <NavLink to="/dashboard">Dashboard</NavLink>
+            {user.role === 'admin' && <NavLink to="/database">Database</NavLink>}
             <NavLink to="/account">Account</NavLink>
             <span className="avatar" title={user.email}>{user.name[0]?.toUpperCase()}</span>
             <button className="btn ghost sm" onClick={async () => { await logout(); nav('/'); }}>

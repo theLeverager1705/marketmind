@@ -8,6 +8,7 @@ import { Login, Register } from './pages/AuthPages.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Report from './pages/Report.jsx';
 import Account from './pages/Account.jsx';
+import Database from './pages/Database.jsx';
 import './styles.css';
 
 function Protected({ children }) {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
           <Route path="/analysis/:id" element={<Protected><Report /></Protected>} />
           <Route path="/account" element={<Protected><Account /></Protected>} />
+          <Route path="/database" element={<Protected><Database /></Protected>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

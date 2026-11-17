@@ -132,6 +132,17 @@ input:focus, textarea:focus { outline: 2px solid var(--primary); border-color: t
 .history li:last-child { border-bottom: 0; }
 .history-main { display: flex; flex-direction: column; gap: 3px; color: var(--text); min-width: 0; }
 
+/* Database explorer */
+.col-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip.static { cursor: default; font-size: .78rem; }
+.table-scroll { overflow-x: auto; }
+.table-scroll .table { min-width: 720px; display: table; }
+.table-scroll .table td { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.schema { margin-top: 14px; }
+.schema pre { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; overflow-x: auto; font-size: .78rem; color: var(--muted); }
+a.stat { color: var(--text); }
+a.stat:hover { border-color: var(--primary); }
+
 /* Report */
 .progress { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; margin: 10px 0 16px; }
 .progress div { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-2)); transition: width .5s; }

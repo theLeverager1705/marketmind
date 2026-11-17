@@ -8,6 +8,7 @@ import { config, aiEnabled } from './config.js';
 import './db.js';
 import authRoutes from './routes/auth.js';
 import analysisRoutes from './routes/analyses.js';
+import adminRoutes from './routes/admin.js';
 
 const app = express();
 app.set('trust proxy', 1);
@@ -18,6 +19,7 @@ app.use(express.json({ limit: '100kb' }));
 app.get('/api/health', (_req, res) => res.json({ ok: true, mode: aiEnabled() ? 'ai' : 'demo' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/analyses', analysisRoutes);
+app.use('/api/admin', adminRoutes);
 
 // In production, serve the built React app from the same server.
 const here = path.dirname(fileURLToPath(import.meta.url));
